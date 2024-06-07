@@ -1,28 +1,10 @@
 const puppeteer = require('puppeteer')
 const mongoose = require('mongoose');
-require('dotenv').config()
-const ImResult = require('./models/imresult.js')
 
-if (process.env.NODE_ENV == "production") {
-    dbURL = process.env.dbURL
-    secret = process.env.secret
-} else {
-    dbURL = 'mongodb://127.0.0.1:27017/resultscraping'
-    secret = 'secret'
-}
-
-mongoose.connect(dbURL);
-const db = mongoose.connection;
-db.on("error", console.error.bind(console, "connection error:"));
-db.once("open", () => {
-    console.log("Database connected by mongoose")
-})
+const ImResult = require('../models/imresult.js')
 
 
-
-
-
-async function main() {
+async function scrapeIM() {
     const browser = await puppeteer.launch({ headless: false, devtools: true });
     console.log("browser launched")
     const page = await browser.newPage();
@@ -149,7 +131,7 @@ async function insertUpdates(results) {
             var doc = await ImResult.findOne({ fullName: result.fullName })
             //console.log(doc)
             if (!doc) {
-                console.log("Need to write this document")
+                //console.log("Need to write this document")
                 result.overallRank = result.overallRank.replace(",", "")  // remove comma from number
                 result.genderRank = result.genderRank.replace(",", "")
                 result.divRank = result.divRank.replace(",", "")
@@ -164,7 +146,7 @@ async function insertUpdates(results) {
                 //     newImResult.overallRank = tmp.replace(",", "")
                 // }
                 res = await newImResult.save()
-                console.log(res)
+                //console.log(res)
             }
         })
     } catch (e) {
@@ -179,4 +161,6 @@ function delay(time) {
     });
 }
 
-main();
+
+
+module.exports = scrapeIM

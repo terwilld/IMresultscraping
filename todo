@@ -6,3 +6,6 @@ https://blog.appsignal.com/2023/02/08/puppeteer-in-nodejs-common-mistakes-to-avo
 DocumentNotFoundError: No document found for query
 fun error when clearing db and previous iteration is open
 
+
+separate thread for scraping
+error handling on timeouts
