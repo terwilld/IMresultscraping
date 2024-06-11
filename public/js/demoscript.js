@@ -10,8 +10,8 @@ function compareNumbers(a, b) {
     return a - b;
 }
 console.log(axiosURL)
-axios.get("http://localhost:3000/results")
-//axios.get(axiosURL + "/results")
+//axios.get("http://localhost:3000/results")
+axios.get(axiosURL + "/results")
     .then(response => {
         data = response.data;
         console.log(`Data length pre filter: ${data.length}`)
