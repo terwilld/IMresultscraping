@@ -10,8 +10,8 @@ module.exports.index = async (req, res) => {
     //console.log(results)
     //res.send(results)
     console.log(`The axios URL from the controller is: ${axiosURL}`)
-    console.log(axiosURL)
-    res.render('index.ejs', { axiosURL })
+    //console.log(axiosURL)
+    res.render('index.ejs', {  })
 }
 
 module.exports.results = async (req, res) => {

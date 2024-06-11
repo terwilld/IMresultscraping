@@ -10,6 +10,8 @@ fun error when clearing db and previous iteration is open
 separate thread for scraping
 error handling on timeouts
 
+black magic.  The fuckin app replaces localhost
+
 
 https://www.reddit.com/r/node/comments/efni4m/pass_data_from_appjs_to_the_script_in_ejs_file/
 

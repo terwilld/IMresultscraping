@@ -44,4 +44,4 @@ app.listen(3000, () => {
 
 
 //scrapeIM();
-//scrapeIM2();
+scrapeIM2();
