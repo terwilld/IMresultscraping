@@ -17,6 +17,8 @@ if (process.env.NODE_ENV == "production") {
     secret = 'secret';
     axoisURL = 'http://localhost:3000'
 }
+runScraper = process.env.runScraper
+console.log(runScraper)
 
 mongoose.connect(dbURL);
 const db = mongoose.connection;
@@ -44,4 +46,7 @@ app.listen(3000, () => {
 
 
 //scrapeIM();
-scrapeIM2();
+if (runScraper == 'true') {
+    console.log("Running Scraper")
+    scrapeIM2();
+}

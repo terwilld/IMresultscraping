@@ -12,6 +12,12 @@ error handling on timeouts
 
 black magic.  The fuckin app replaces localhost
 
+Deploy on render using chromium
+
+
+
+https://community.render.com/t/puppeteer-fails-to-find-chromium-on-render/9920
+
 
 https://www.reddit.com/r/node/comments/efni4m/pass_data_from_appjs_to_the_script_in_ejs_file/
 
