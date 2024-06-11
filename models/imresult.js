@@ -15,11 +15,31 @@ const ImResultSchema = new Schema({
     bikeTime: String,
     bikeSeconds: Number,
     runTime: String,
-    runSeconds: Number
+    runSeconds: Number,
+    totalTime: String,
+    totalTimeSeconds: Number,
+    bib: Number,
+    division: {
+        type: String,
+        enum: ['Unknown', 'MPRO', 'FPRO',
+            'M18-24', 'M25-29', 'M30-34', 'M35-39', 'M40-44', 'M45-49', 'M50-54', 'M55-59', 'M60-64', 'M65-69', 'M70-74', 'M75-79', 'M80-84', 'M85-89',
+            'F18-24', 'F25-29', 'F30-34', 'F35-39', 'F40-44', 'F45-49', 'F50-54', 'F55-59', 'F60-64', 'F65-69', 'F70-74', 'F75-79', 'F80-84', 'F85-89',
+            'PC/ID'
+        ],
+        default: 'Unknown'
+    },
+    T1: String,
+    T2: String,
+    isMale: {
+        type: Boolean,
+        default: null
+    },
+    designation: String
 })
 
-ImResultSchema.post('save', function (doc) {
+ImResultSchema.pre('save', function (next) {
     //this.firstName = this.fullName.split(' ', 1)[0]
+    //console.log("in post save middleware")
     //this.lastName = this.fullName.split(' ', 2)[1]
     this.firstName = this.fullName.substring(0, this.fullName.indexOf(" "))
     this.lastName = this.fullName.substring(this.fullName.indexOf(" ") + 1)
@@ -29,7 +49,19 @@ ImResultSchema.post('save', function (doc) {
     this.bikeSeconds = tt[0] * 3600 + tt[1] * 60 + tt[2] * 1;
     tt = this.runTime.split(":")
     this.runSeconds = tt[0] * 3600 + tt[1] * 60 + tt[2] * 1;
-    this.save();
+    tt = this.totalTime.split(":")
+    this.totalTimeSeconds = tt[0] * 3600 + tt[1] * 60 + tt[2] * 1;
+    //console.log(`Is Male?: ${this.isMale}`)
+    if (this.division[0] == 'M') {
+        this.isMale = true
+    } else {
+        this.isMale = false
+    }
+    //console.log(`Is Male?: ${this.isMale}`)
+
+
+    //this.save();
+    next();
 });
 // ImResultSchema.pre('save', function (doc) {
 //     console.log(this.overallRank)

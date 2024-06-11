@@ -9,3 +9,26 @@ fun error when clearing db and previous iteration is open
 
 separate thread for scraping
 error handling on timeouts
+
+
+https://www.reddit.com/r/node/comments/efni4m/pass_data_from_appjs_to_the_script_in_ejs_file/
+
+https://stackoverflow.com/questions/11289793/accessing-ejs-variable-in-javascript-logic
+
+https://stackoverflow.com/questions/71893744/how-to-pass-a-variable-from-a-node-js-file-to-a-frontend-javascript-file
+
+https://stackoverflow.com/questions/62156490/pass-data-from-node-express-to-front-end-javascript
+
+https://dev.to/alexmercedcoder/frontend-javascript-ajax-http-request-guide-1jk2
+
+
+https://stackoverflow.com/questions/42810367/how-to-pull-data-from-browser-using-ajax-and-store-in-my-mongodb
+
+https://www.nature.com/articles/s41598-023-38181-y#:~:text=Female%20and%20male%20athletes%20were,years%20and%2085%E2%80%9389%20years.
+
+
+
+
+https://stackoverflow.com/questions/70337807/how-to-change-font-size-padding-of-chart-title-only-in-chart-js-3-x
+
+https://www.chartjs.org/docs/latest/samples/tooltip/content.html

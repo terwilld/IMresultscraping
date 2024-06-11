@@ -4,8 +4,10 @@ const mongoose = require('mongoose');
 const ImResult = require('../models/imresult.js')
 
 
-async function scrapeIM() {
-    const browser = await puppeteer.launch({ headless: false, devtools: true });
+
+async function scrapeIM2() {
+    //const browser = await puppeteer.launch({ headless: false, devtools: true });
+    const browser = await puppeteer.launch();
     console.log("browser launched")
     const page = await browser.newPage();
     await page.setViewport({ width: 1600, height: 700 });
@@ -37,6 +39,8 @@ async function scrapeIM() {
         timeout: 20 * 1000,
         waitUntil: ["domcontentloaded", "networkidle2"],
     });
+    page.on('console', msg => console.log('PAGE LOG:', msg.text()));
+
     console.log("network idle")
     //https://labs.competitor.com/result/subevent/811402C9-91A1-4EBB-B102-E083A44876E7?filter=%7B%7D&order=ASC&page=1&perPage=10000&sort=FinishRankOverall
 
@@ -51,10 +55,14 @@ async function scrapeIM() {
         console.log(biggestPage)
         return biggestPage
     })
-    await delay(500)
+    await new Promise(function (resolve) {
+        setTimeout(resolve, 1)
+    });
     console.log("wait for tables")
 
+
     var currentPageResults = await getPageResults(page)
+    console.log("Trying to insert results")
     try {
         insertUpdates(currentPageResults)
     } catch (e) {
@@ -70,8 +78,8 @@ async function scrapeIM() {
             waitUntil: ["domcontentloaded", "networkidle2"],
         });
         console.log(`network idle on page: ${fullNewURL}`)
-        await delay(500)
-        console.log("wait for tables")
+
+
         var currentPageResults = await getPageResults(page)
         try {
             insertUpdates(currentPageResults)
@@ -85,15 +93,15 @@ async function scrapeIM() {
 }
 
 async function getPageResults(page) {
-    console.log("insdie the function log page: ")
-    console.log(page)
-    pageResults = page.evaluate(() => {
-        currentRows = document.querySelectorAll('tbody > tr')
+    const expandableButtons = await page.evaluate(async () => {
+        // Each row is one result.  Each needs to be expanded.
         results = []
+        currentRows = document.querySelectorAll('tbody > tr')
         for (i = 0; i < currentRows.length; i++) {
-            current = currentRows[i]
-            currentData = Array.from(current.querySelectorAll('td >span')).map(x => x.innerText)
-            newObject = {
+
+            currentRow = currentRows[i]
+            currentData = Array.from(currentRow.querySelectorAll('td >span')).map(x => x.innerText)
+            newResultObject = {
                 'fullName': currentData[0],
                 'country': currentData[1],
                 'divRank': currentData[2],
@@ -104,29 +112,83 @@ async function getPageResults(page) {
                 'runTime': currentData[7],
                 'totalTime': currentData[8],
                 'points': currentData[9],
+                'designation': null
             }
-            results.push(newObject)
+            console.log(`currently getting result #${newResultObject.overallRank}`)
+
+            expandButton = currentRows[i].cells[0]
+            await expandButton.click();
+
+
+            resultContainer = document.querySelector('.resultContainer')
+            rankSummary = resultContainer.querySelectorAll('.rankSum >.wrapper>.text')
+            //console.log(resultContainer)
+            //console.log(rankSummary)
+
+
+            for (let i = 0; i < rankSummary.length; i++) {
+                designation = rankSummary[i].querySelector('.rankText')
+                //console.log(designation)
+
+                // await new Promise(function (resolve) {
+                //     setTimeout(resolve, 500000)
+                // });
+                try {
+                    if (designation.innerText == 'DESIGNATION') {
+                        //console.log(`About to break? rank summary: ${i}`)
+                        //console.log(designation.innerText)
+
+                        result = rankSummary[i].querySelector('.rankNum').innerText
+
+                        newResultObject.designation = result
+
+                    }
+                } catch (e) {
+                }
+            }
+
+
+            await new Promise(function (resolve) {
+                setTimeout(resolve, 10)
+            });
+            //console.log(resultContainer)
+            genInfo = resultContainer.querySelectorAll('.genInfo > .table > .tableFooter >.wrapper >.text')
+            //console.log(genInfo)
+            newResultObject.bib = genInfo[0].innerText
+            newResultObject.division = genInfo[1].innerText
+            newResultObject.points = genInfo[3].innerText
+            transitions = resultContainer.querySelectorAll('#transitions >.table> .tableFooter > .wrapper >.text')
+            newResultObject.T1 = transitions[0].innerText
+            newResultObject.T2 = transitions[1].innerText
+            results.push(newResultObject)
+            await expandButton.click();
         }
         return results
+
     })
-    console.log("About to return results from page")
-    return pageResults
+
+    return expandableButtons
 }
 
 
 async function insertUpdates(results) {
     console.log("These are my results")
-
     try {
         results.forEach(async (result) => {
             var doc = await ImResult.findOne({ fullName: result.fullName })
+
             if (!doc) {
+                console.log("Need to write this document")
+                console.log(result)
                 result.overallRank = result.overallRank.replace(",", "")  // remove comma from number
                 result.genderRank = result.genderRank.replace(",", "")
                 result.divRank = result.divRank.replace(",", "")
+                result.bib = parseInt(result.bib)
                 var newImResult = new ImResult(result)
                 res = await newImResult.save()
-
+            } else {
+                //console.log("Document is already found")
+                //console.log(result)
             }
         })
     } catch (e) {
@@ -134,13 +196,15 @@ async function insertUpdates(results) {
     }
 }
 
-
-function delay(time) {
-    return new Promise(function (resolve) {
-        setTimeout(resolve, time)
-    });
+function checkResults() {
+    for (let i = 0; i < db.imresults.count(); i++) {
+        doc = db.imresults.findOne({ 'overallRank': i })
+        if (!doc) {
+            console.log(i)
+        }
+    }
 }
 
 
 
-module.exports = scrapeIM
+module.exports = scrapeIM2
