@@ -2,7 +2,7 @@
 var ctx2 = document.getElementById('mySecondChart');
 var ctx3 = document.getElementById('thirdChart').getContext('2d');
 var ctx4 = document.getElementById('fourthChart').getContext('2d');
-
+var ctx5 = document.getElementById('rankVsTime').getContext('2d');
 var stars = [135850, 52122, 148825, 16939, 9763];
 var frameworks = ['React', 'Angular', 'Vue', 'Hyperapp', 'Omi'];
 
@@ -11,6 +11,45 @@ function compareNumbers(a, b) {
 }
 console.log(axiosURL)
 //axios.get("http://localhost:3000/results")
+
+
+axios.get(axiosURL + "resultsSummary")
+    .then(response => {
+        summaryData = response.data;
+        console.log(`This is my summary data:`)
+        console.log(summaryData)
+        // document.getElementById('firstDivisionM').innerText = summaryData.filter(obj => { return obj._id == "MPRO" })[0]._id
+        // document.getElementById('1WinnerNameM').innerText = summaryData.filter(obj => { return obj._id == "MPRO" })[0].winner
+        // document.getElementById('1WinnerTimeM').innerText = summaryData.filter(obj => { return obj._id == "MPRO" })[0].time
+
+        summaryData.forEach(function (arrayItem) {
+            console.log(arrayItem._id)
+
+            let division = arrayItem._id
+            if (division == "PC/ID") {
+                division = "PC\\/ID"
+            }
+            //console.log(document.querySelector(`.${division} > .Division`))
+            try {
+                document.querySelector((`.${division} > .Division`)).innerText = arrayItem._id
+                document.querySelector((`.${division} > .winnerName`)).innerText = arrayItem.winner
+                document.querySelector((`.${division} > .winnerTime`)).innerText = arrayItem.time
+                document.querySelector((`.${division} > .divCount`)).innerText = arrayItem.count
+            } catch (e) {
+                //console.log(e)
+            }
+
+            //         document.querySelector(`.${division} > .Division`)).innerText = arrayItem.time
+            // document.querySelector((`.${division} > .Division`)).innerText = arrayItem.count
+            // document.querySelector((`.${division} > .Division`)).innerText = arrayItem._id
+            //document.querySelector(`.{PC\\/ID > .Division`)
+
+
+        });
+
+
+    })
+
 axios.get(axiosURL + "/results")
     .then(response => {
         data = response.data;
@@ -200,6 +239,64 @@ axios.get(axiosURL + "/results")
             }
         });
 
+        maleRankData = data
+            .filter((result) => result.isMale == true)
+            .filter((result) => result.genderRank != 99999)
+        maxMaleRank = Math.max(...maleRankData.map(o => o.genderRank))
+        maleRankData = maleRankData
+            .map((x) => ({ 'x_backup': x.genderRank, 'y': x.totalTime, 'x': x.genderRank / maxMaleRank }))
+
+        femaleRankData = data
+            .filter((result) => result.isMale == false)
+            .filter((result) => result.genderRank != 99999)
+        maxFemaleRank = Math.max(...femaleRankData.map(o => o.genderRank))
+        femaleRankData = femaleRankData
+            .map((x) => ({ 'x_backup': x.genderRank, 'y': x.totalTime, 'x': x.genderRank / maxFemaleRank }))
+        console.log("This is my male rank data")
+        console.log(maleRankData)
+        console.log("This is my female rank data")
+        console.log(femaleRankData)
+        var myChart5 = new Chart(ctx5,
+            {
+                type: "scatter",
+                data: {
+                    datasets: [
+                        //     {
+                        //     data: [
+                        //         { x: 1, y: '7:34:41' }, { x: 500, y: '8:34:41' }, { x: 10, y: '10:34:41' }
+                        //     ],
+                        //     label: 'A',
+                        // },
+                        {
+                            data: maleRankData,
+                            label: "Male Percentile vs Finishing Time"
+                        },
+                        {
+                            data: femaleRankData,
+                            label: "Female Percentile vs Finishing Time"
+                        }
+                    ]
+                },
+                options: {
+                    scales: {
+                        x: {},
+                        y: {
+                            type: "time",
+                            time: {
+                                parser: 'HH:mm:ss',
+                                unit: "seconds",
+                                tooltipFormat: 'HH:mm:ss',
+                                displayFormats: {
+                                    'seconds': "HH:mm:ss"
+                                },
+                                unitStepSize: 30000
+                            }
+                        }
+                    }
+                }
+            }
+
+        );
 
     })
 

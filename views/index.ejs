@@ -2,21 +2,305 @@
 
 <!--<div class="container px-5 py-5"> -->
 
-<p></p>
-<div class="container px-5 py-5 mb-5">
-
-    <div class="row px-5 py-5 mb-5">
-        <canvas id="mySecondChart"></canvas>
+<div class="container-fluid d-flex justify-content-center py-5 my-5">
+    <div class="col-md-10 d-flex justify-content-center">
+        <div class="jumbotron">
+            <h1>IronMan Florida Results</h1>
+            <p>This is race data pulled with puppeteer and some charts rendered with chart JS</p>
+            <p>
+                <a class="btn btn-lg btn-primary" href="https://github.com/terwilld/IMresultscraping" role="button">View
+                    Repo</a>
+            </p>
+        </div>
     </div>
 
-    <div class="row px-5 py-5 mb-5">
-        <canvas id="thirdChart"></canvas>
-    </div>
+</div>
 
-    <div class="row px-5 py-5 mb-5">
-        <canvas id="fourthChart"></canvas>
+<div class="container-fluid d-flex justify-content-center">
+    <div class="col-md-10 d-flex justify-content-center">
+        <div class="col-md-6 px-3">
+            <table class="table maleResultsSummary">
+                <thead>
+                    <tr>
+                        <th scope="col">Division</th>
+                        <th scope="col">Winner</th>
+                        <th scope="col">Time</th>
+                        <th scope="col">Participants</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="MPRO">
+                        <th scope="row" class="Division">No Entries Found</th>
+                        <td scope="row" class="winnerName">No Entries Found</td>
+                        <td scope="row" class="winnerTime">No Entries Found</td>
+                        <td scope="row" class="divCount">No Entries Found</td>
+                    </tr>
+                    <tr class="M18-24">
+                        <th scope="row" class="Division">No Entries Found</th>
+                        <td scope="row" class="winnerName">No Entries Found</td>
+                        <td scope="row" class="winnerTime">No Entries Found</td>
+                        <td scope="row" class="divCount">No Entries Found</td>
+                    </tr>
+                    <tr class="M25-29">
+                        <th scope="row" class="Division">No Entries Found</th>
+                        <td scope="row" class="winnerName">No Entries Found</td>
+                        <td scope="row" class="winnerTime">No Entries Found</td>
+                        <td scope="row" class="divCount">No Entries Found</td>
+                    </tr>
+                    <tr class="M30-34">
+                        <th scope="row" class="Division">No Entries Found</th>
+                        <td scope="row" class="winnerName">No Entries Found</td>
+                        <td scope="row" class="winnerTime">No Entries Found</td>
+                        <td scope="row" class="divCount">No Entries Found</td>
+                    </tr>
+                    <tr class="M35-39">
+                        <th scope="row" class="Division">No Entries Found</th>
+                        <td scope="row" class="winnerName">No Entries Found</td>
+                        <td scope="row" class="winnerTime">No Entries Found</td>
+                        <td scope="row" class="divCount">No Entries Found</td>
+                    </tr>
+                    <tr class="M40-44">
+                        <th scope="row" class="Division">No Entries Found</th>
+                        <td scope="row" class="winnerName">No Entries Found</td>
+                        <td scope="row" class="winnerTime">No Entries Found</td>
+                        <td scope="row" class="divCount">No Entries Found</td>
+                    </tr>
+                    <tr class="M45-49">
+                        <th scope="row" class="Division">No Entries Found</th>
+                        <td scope="row" class="winnerName">No Entries Found</td>
+                        <td scope="row" class="winnerTime">No Entries Found</td>
+                        <td scope="row" class="divCount">No Entries Found</td>
+                    </tr>
+                    <tr class="M50-54">
+                        <th scope="row" class="Division">No Entries Found</th>
+                        <td scope="row" class="winnerName">No Entries Found</td>
+                        <td scope="row" class="winnerTime">No Entries Found</td>
+                        <td scope="row" class="divCount">No Entries Found</td>
+                    </tr>
+                    <tr class="M55-59">
+                        <th scope="row" class="Division">No Entries Found</th>
+                        <td scope="row" class="winnerName">No Entries Found</td>
+                        <td scope="row" class="winnerTime">No Entries Found</td>
+                        <td scope="row" class="divCount">No Entries Found</td>
+                    </tr>
+                    <tr class="M60-64">
+                        <th scope="row" class="Division">No Entries Found</th>
+                        <td scope="row" class="winnerName">No Entries Found</td>
+                        <td scope="row" class="winnerTime">No Entries Found</td>
+                        <td scope="row" class="divCount">No Entries Found</td>
+                    </tr>
+                    <tr class="M65-69">
+                        <th scope="row" class="Division">No Entries Found</th>
+                        <td scope="row" class="winnerName">No Entries Found</td>
+                        <td scope="row" class="winnerTime">No Entries Found</td>
+                        <td scope="row" class="divCount">No Entries Found</td>
+                    </tr>
+
+                    <tr class="M70-74">
+                        <th scope="row" class="Division">No Entries Found</th>
+                        <td scope="row" class="winnerName">No Entries Found</td>
+                        <td scope="row" class="winnerTime">No Entries Found</td>
+                        <td scope="row" class="divCount">No Entries Found</td>
+                    </tr>
+                    <tr class="M75-79">
+                        <th scope="row" class="Division">No Entries Found</th>
+                        <td scope="row" class="winnerName">No Entries Found</td>
+                        <td scope="row" class="winnerTime">No Entries Found</td>
+                        <td scope="row" class="divCount">No Entries Found</td>
+                    </tr>
+                    <tr class="M80-84">
+                        <th scope="row" class="Division">No Entries Found</th>
+                        <td scope="row" class="winnerName">No Entries Found</td>
+                        <td scope="row" class="winnerTime">No Entries Found</td>
+                        <td scope="row" class="divCount">No Entries Found</td>
+                    </tr>
+                    <tr class="PC/ID">
+                        <th scope="row" class="Division">No Entries Found</th>
+                        <td scope="row" class="winnerName">No Entries Found</td>
+                        <td scope="row" class="winnerTime">No Entries Found</td>
+                        <td scope="row" class="divCount">No Entries Found</td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+        <div class="col-md-6 px-3">
+            <table class="table femaleResultsSummary">
+                <thead>
+                    <tr>
+                        <th scope="col">Division</th>
+                        <th scope="col">Winner</th>
+                        <th scope="col">Time</th>
+                        <th scope="col">Participants</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="FPRO">
+                        <th scope="row" class="Division">No Entries Found</th>
+                        <td scope="row" class="winnerName">No Entries Found</td>
+                        <td scope="row" class="winnerTime">No Entries Found</td>
+                        <td scope="row" class="divCount">No Entries Found</td>
+                    </tr>
+                    <tr class="F18-24">
+                        <th scope="row" class="Division">No Entries Found</th>
+                        <td scope="row" class="winnerName">No Entries Found</td>
+                        <td scope="row" class="winnerTime">No Entries Found</td>
+                        <td scope="row" class="divCount">No Entries Found</td>
+                    </tr>
+                    <tr class="F25-29">
+                        <th scope="row" class="Division">No Entries Found</th>
+                        <td scope="row" class="winnerName">No Entries Found</td>
+                        <td scope="row" class="winnerTime">No Entries Found</td>
+                        <td scope="row" class="divCount">No Entries Found</td>
+                    </tr>
+                    <tr class="F30-34">
+                        <th scope="row" class="Division">No Entries Found</th>
+                        <td scope="row" class="winnerName">No Entries Found</td>
+                        <td scope="row" class="winnerTime">No Entries Found</td>
+                        <td scope="row" class="divCount">No Entries Found</td>
+                    </tr>
+                    <tr class="F35-39">
+                        <th scope="row" class="Division">No Entries Found</th>
+                        <td scope="row" class="winnerName">No Entries Found</td>
+                        <td scope="row" class="winnerTime">No Entries Found</td>
+                        <td scope="row" class="divCount">No Entries Found</td>
+                    </tr>
+                    <tr class="F40-44">
+                        <th scope="row" class="Division">No Entries Found</th>
+                        <td scope="row" class="winnerName">No Entries Found</td>
+                        <td scope="row" class="winnerTime">No Entries Found</td>
+                        <td scope="row" class="divCount">No Entries Found</td>
+                    </tr>
+                    <tr class="F45-49">
+                        <th scope="row" class="Division">No Entries Found</th>
+                        <td scope="row" class="winnerName">No Entries Found</td>
+                        <td scope="row" class="winnerTime">No Entries Found</td>
+                        <td scope="row" class="divCount">No Entries Found</td>
+                    </tr>
+                    <tr class="F50-54">
+                        <th scope="row" class="Division">No Entries Found</th>
+                        <td scope="row" class="winnerName">No Entries Found</td>
+                        <td scope="row" class="winnerTime">No Entries Found</td>
+                        <td scope="row" class="divCount">No Entries Found</td>
+                    </tr>
+                    <tr class="F55-59">
+                        <th scope="row" class="Division">No Entries Found</th>
+                        <td scope="row" class="winnerName">No Entries Found</td>
+                        <td scope="row" class="winnerTime">No Entries Found</td>
+                        <td scope="row" class="divCount">No Entries Found</td>
+                    </tr>
+                    <tr class="F60-64">
+                        <th scope="row" class="Division">No Entries Found</th>
+                        <td scope="row" class="winnerName">No Entries Found</td>
+                        <td scope="row" class="winnerTime">No Entries Found</td>
+                        <td scope="row" class="divCount">No Entries Found</td>
+                    </tr>
+                    <tr class="F65-69">
+                        <th scope="row" class="Division">No Entries Found</th>
+                        <td scope="row" class="winnerName">No Entries Found</td>
+                        <td scope="row" class="winnerTime">No Entries Found</td>
+                        <td scope="row" class="divCount">No Entries Found</td>
+                    </tr>
+
+                    <tr class="F70-74">
+                        <th scope="row" class="Division"></th>
+                        <td scope="row" class="winnerName"></td>
+                        <td scope="row" class="winnerTime"></td>
+                        <td scope="row" class="divCount"></td>
+                    </tr>
+                    <tr class="F75-79">
+                        <th scope="row" class="Division"></th>
+                        <td scope="row" class="winnerName"></td>
+                        <td scope="row" class="winnerTime"></td>
+                        <td scope="row" class="divCount"></td>
+                    </tr>
+                    <tr class="F80-84">
+                        <th scope="row" class="Division"></th>
+                        <td scope="row" class="winnerName"></td>
+                        <td scope="row" class="winnerTime"></td>
+                        <td scope="row" class="divCount"></td>
+                    </tr>
+                    <tr class="PC/ID">
+                        <th scope="row" class="Division"></th>
+                        <td scope="row" class="winnerName"></td>
+                        <td scope="row" class="winnerTime"></td>
+                        <td scope="row" class="divCount"></td>
+                    </tr>
+                </tbody>
+            </table>
+
+
+        </div>
     </div>
 </div>
+
+<div class="container-fluid">
+    <div class="card-group no-bgs">
+        <div class="card text-center">
+            <div class="card-header">
+                <h6 class="">Gender Percentile VS Finishing Time</h6>
+            </div>
+            <div class="card-body">
+                <canvas id="rankVsTime"></canvas>
+            </div>
+            <div class="card-footer">
+            </div>
+        </div>
+
+        <div class="card text-center">
+            <div class="card-header">
+                <h6 class="">Information Architecture</h6>
+            </div>
+            <div class="card-body">
+                <canvas id="thirdChart"></canvas>
+
+            </div>
+            <div class="card-footer">
+
+
+            </div>
+        </div>
+
+        <div class="card text-center">
+            <div class="card-header">
+                <h6 class="">Bike vs Run Splits</h6>
+            </div>
+            <div class="card-body">
+                <canvas id="fourthChart"></canvas>
+            </div>
+            <div class="card-footer">
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="container-fluid">
+
+
+    <div class="row justify-content-center">
+        <div class="col-lg-4">
+
+            <canvas id="mySecondChartTYPO"></canvas>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-lg-4">
+            <canvas id="thirdChartTYPO"></canvas>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-lg-4">
+            <canvas id="fourthChartTYPO"></canvas>
+        </div>
+    </div>
+</div>
+
 
 
 <!--
