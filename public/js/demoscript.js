@@ -228,7 +228,7 @@ axios.get(axiosURL + "/results")
                                 if (context.parsed.y !== null) {
                                     label += new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(context.parsed.y);
                                 }
-                                label = 'FUCK'
+                                label = context.dataset.label.toString();
                                 return label;
                             }
                         }
