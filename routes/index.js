@@ -10,4 +10,9 @@ router.get('/bikevsrun', index.bikevsrun)
 
 router.get('/resultsSummary', index.resultsSummary)
 
+router.get('/stackedbar', index.stackedbar)
+
+router.get('/stackedbarhorizontal', index.stackedbarhorizontal)
+
+
 module.exports = router;

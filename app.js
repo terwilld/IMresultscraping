@@ -15,8 +15,13 @@ if (process.env.NODE_ENV == "production") {
 } else {
     dbURL = 'mongodb://127.0.0.1:27017/resultscraping';
     secret = 'secret';
-    axoisURL = 'http://localhost:3000'
+    axiosURL = 'http://localhost:3000'
+
 }
+
+
+console.log(axiosURL)
+
 runScraper = process.env.runScraper
 console.log(runScraper)
 

@@ -3,6 +3,7 @@ var ctx2 = document.getElementById('mySecondChart');
 var ctx3 = document.getElementById('thirdChart').getContext('2d');
 var ctx4 = document.getElementById('fourthChart').getContext('2d');
 var ctx5 = document.getElementById('rankVsTime').getContext('2d');
+var ctx6 = document.getElementById('stackedBar').getContext('2d');
 var stars = [135850, 52122, 148825, 16939, 9763];
 var frameworks = ['React', 'Angular', 'Vue', 'Hyperapp', 'Omi'];
 
@@ -297,6 +298,116 @@ axios.get(axiosURL + "/results")
             }
 
         );
+
+
+        divisionSummary = []
+        for (const result of data) {
+            //console.log(result)
+            if (result.designation == 'Finisher') {
+                //console.log("test")
+                const i = divisionSummary.findIndex(e => e.division === result.division);
+                if (i > -1) {
+                    // We know that at least 1 object that matches has been found at the index i
+                    //console.log(i)
+                    //console.log(divisionSummary)
+                    divisionSummary[i].participants = divisionSummary[i].participants + 1
+                    divisionSummary[i].totalSwimTime = divisionSummary[i].totalSwimTime + result.swimSeconds
+                    divisionSummary[i].totalBikeTime = divisionSummary[i].totalBikeTime + result.bikeSeconds
+                    divisionSummary[i].totalRunTime = divisionSummary[i].totalRunTime + result.runSeconds
+
+                } else {
+                    divisionSummary.push({
+                        'division': result.division,
+                        'totalSwimTime': result.swimSeconds,
+                        'participants': 1,
+                        'totalBikeTime': result.bikeSeconds,
+                        'totalRunTime': result.runSeconds
+                    })
+                }
+            }
+        }
+
+        for (const element of divisionSummary) {
+            element.averageSwimTime = element.totalSwimTime / element.participants / 3600
+            element.averageBikeTime = element.totalBikeTime / element.participants / 3600
+            element.averageRunTime = element.totalRunTime / element.participants / 3600
+            element.averageTotalTime = element.averageSwimTime + element.averageBikeTime + element.averageRunTime
+            console.log(element);
+        }
+        divisionSummary.sort((a, b) => a.averageTotalTime - b.averageTotalTime);
+        divisions = divisionSummary.map(({ division }) => division)
+        averageSwimTimes = divisionSummary.map(({ averageSwimTime }) => averageSwimTime)
+        averageBikeTimes = divisionSummary.map(({ averageBikeTime }) => averageBikeTime)
+        averageRunTimes = divisionSummary.map(({ averageRunTime }) => averageRunTime)
+
+
+        var ctx = document.getElementById('stackedBar');
+        //const labels = ['MPRO', 'FPRO']
+        const labels = divisions
+        const newdata = {
+            labels: labels,
+            datasets: [
+                {
+                    label: 'Swim',
+                    // data: ['01:00:00'],
+                    //data: [1, 1.2],
+                    data: averageSwimTimes,
+                    backgroundColor: 'blue',
+                },
+                {
+                    label: 'Bike',
+                    //data: [2.5, 3],
+                    data: averageBikeTimes,
+                    // data: ['01:00:00'],
+                    backgroundColor: 'red',
+                },
+                {
+                    label: 'Run',
+                    data: [3, 4],
+                    data: averageRunTimes,
+                    // data: ['01:00:00'],
+                    backgroundColor: 'green',
+                }
+            ]
+        };
+
+        const config = {
+            type: 'bar',
+            data: newdata,
+            options: {
+                plugins: {
+                    title: {
+                        display: false,
+                        text: ''
+                    },
+                },
+                responsive: true,
+
+                scales: {
+                    y: {
+                        min: 0,
+                        max: 16,
+                        stacked: true,
+                        offset: true,
+                        title: {
+                            display: true,
+                            text: 'Hours per activity'
+                        }
+                    },
+                    x: {
+
+                        stacked: true,
+                        offset: true,
+                        title: {
+                            display: true,
+                            text: "Divisions"
+                        }
+
+                    }
+                }
+            }
+        };
+        var myChart6 = new Chart(ctx6, config)
 
     })
 

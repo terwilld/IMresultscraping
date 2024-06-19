@@ -1,0 +1,27 @@
+<% layout('layouts/boilerplate') %>
+
+
+<div class="container-fluid">
+    <div class="card-group no-bgs">
+        <div class="card text-center">
+            <div class="card-header">
+                <h6 class="">Stacked Bar chart of cumulative finishing times</h6>
+            </div>
+            <div class="card-body">
+                <canvas id="stackedBar"></canvas>
+            </div>
+            <div class="card-footer">
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-moment@0.1.1"></script>
+
+
+<script>var axiosURL = '<%axiosURL%>' </script>
+<script src="js/stackedbar.js"></script>

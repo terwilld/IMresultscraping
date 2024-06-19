@@ -9,11 +9,23 @@ module.exports.index = async (req, res) => {
     //results = await ImResult.find({});
     //console.log(results)
     //res.send(results)
-    console.log(`The axios URL from the controller is: ${axiosURL}`)
+    // console.log(`The axios URL from the controller is: ${axiosURL}`)
     //console.log(axiosURL)
 
     res.render('index.ejs', { axiosURL })
 }
+
+module.exports.stackedbar = async (req, res) => {
+    res.render('stackedbar.ejs', { axiosURL })
+
+}
+
+
+module.exports.stackedbarhorizontal = async (req, res) => {
+    res.render('stackedbarhorizontal.ejs', { axiosURL })
+
+}
+
 
 module.exports.results = async (req, res) => {
     results = await ImResult.find({});
