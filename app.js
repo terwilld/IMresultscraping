@@ -5,8 +5,10 @@ const express = require('express');
 const indexRoutes = require('./routes/index.js')
 const scrapeIM = require('./scraping/scrapeIM.js')
 const scrapeIM2 = require('./scraping/scrapeIM2.js')
+const scrapeIM3 = require('./scraping/scrapeIM3.js')
 const path = require('path')
 const ejsMate = require('ejs-mate');
+const loadEvents = require('./scraping/loadEvents')
 
 if (process.env.NODE_ENV == "production") {
     dbURL = process.env.dbURL;
@@ -50,8 +52,16 @@ app.listen(3000, () => {
 
 
 
+
+
+loadEvents()
+
+
+
+
 //scrapeIM();
 if (runScraper == 'true') {
     console.log("Running Scraper")
-    scrapeIM2();
+    //scrapeIM2();
+    scrapeIM3();
 }

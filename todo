@@ -14,6 +14,43 @@ black magic.  The fuckin app replaces localhost
 
 Deploy on render using chromium
 
+Added events and oid
+My mechanism to collect the api was incorrect.  I need to intercept webtraffic.
+
+https://stackoverflow.com/questions/52969381/how-can-i-capture-all-network-requests-and-full-response-data-when-loading-a-pag
+
+
+https://stackoverflow.com/questions/52969381/how-can-i-capture-all-network-requests-and-full-response-data-when-loading-a-pag
+
+
+resultscraping> db.imresults.aggregate([{$group:{_id:"$fullName",count:{$sum:1}}},{$sort:{count:-1}}])
+[
+  { _id: 'Michael Tate', count: 3 },
+  { _id: 'Matthew Wade', count: 3 },
+  { _id: 'Nicolas Frison', count: 2 },
+  { _id: 'Brian Huelsman', count: 2 },
+  { _id: 'Delaine Lott', count: 2 },
+  { _id: 'Scott Packard', count: 2 },
+  { _id: 'Ryan Falkenrath', count: 2 },
+  { _id: 'Estrella Garcia', count: 2 },
+  { _id: 'Ricardo Trentin', count: 2 },
+  { _id: 'Prashant Patel', count: 2 },
+  { _id: 'Phillip Thompson', count: 2 },
+  { _id: 'Roberto Hernandez', count: 2 },
+  { _id: 'Caleb Cheng', count: 2 },
+  { _id: 'Paul Strong', count: 2 },
+  { _id: 'Sarah Day', count: 2 },
+  { _id: 'Rob Abcug', count: 2 },
+  { _id: 'Stephanie Gerena', count: 2 },
+  { _id: 'Carleton Watkins', count: 2 },
+  { _id: 'Andrew Lull', count: 2 },
+  { _id: 'David Kaplan', count: 2 }
+]
+WHOA
+db.raceevents.updateMany({},{$set:{completed:true}})
+
+
+
 
 
 https://community.render.com/t/puppeteer-fails-to-find-chromium-on-render/9920

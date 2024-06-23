@@ -1,13 +1,27 @@
 const puppeteer = require('puppeteer')
 const mongoose = require('mongoose');
-
+const RaceEvent = require('../models/raceEvent.js')
 const ImResult = require('../models/imresult.js')
+require('dotenv').config()
 
-
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
 
 async function scrapeIM2() {
-    //const browser = await puppeteer.launch({ headless: false, devtools: true });
-    const browser = await puppeteer.launch();
+    console.log("Test in function ScrapeIM2")
+    console.log(process.env.headless)
+    var headless = process.env.headless === 'true'
+    console.log(`Is this headless: ${headless}`)
+    // const browser = await puppeteer.launch({ headless: false, devtools: true });
+    const browser = await puppeteer.launch({ headless });
+
+    //setTimeout(() => { console.log('50 seconds passed'); }, 50000);
+    races = await RaceEvent.find({})
+    console.log("Races")
+    console.log(races)
+    console.log('presleep')
+    await sleep(10000)
     console.log("browser launched")
     const page = await browser.newPage();
     await page.setViewport({ width: 1600, height: 700 });
@@ -166,7 +180,6 @@ async function getPageResults(page) {
         return results
 
     })
-
     return expandableButtons
 }
 

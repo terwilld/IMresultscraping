@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
-
+const RaceEvent = require('./raceEvent')
 
 const ImResultSchema = new Schema({
     fullName: String,
@@ -24,7 +24,7 @@ const ImResultSchema = new Schema({
         enum: ['Unknown', 'MPRO', 'FPRO',
             'M18-24', 'M25-29', 'M30-34', 'M35-39', 'M40-44', 'M45-49', 'M50-54', 'M55-59', 'M60-64', 'M65-69', 'M70-74', 'M75-79', 'M80-84', 'M85-89',
             'F18-24', 'F25-29', 'F30-34', 'F35-39', 'F40-44', 'F45-49', 'F50-54', 'F55-59', 'F60-64', 'F65-69', 'F70-74', 'F75-79', 'F80-84', 'F85-89',
-            'PC/ID'
+            'PC/ID', 'PC', 'UNKNOWN'
         ],
         default: 'Unknown'
     },
@@ -34,7 +34,11 @@ const ImResultSchema = new Schema({
         type: Boolean,
         default: null
     },
-    designation: String
+    designation: String,
+    event: {
+        type: Schema.Types.ObjectId,
+        ref: "RaceEvent"
+    }
 })
 
 ImResultSchema.pre('save', function (next) {
