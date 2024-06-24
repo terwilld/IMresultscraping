@@ -50,6 +50,11 @@ WHOA
 db.raceevents.updateMany({},{$set:{completed:true}})
 
 
+4 races.  Re-learn to deploy with pupeteer
+
+Multiple races
+Forgot headless true on deploy env variables
+
 
 
 

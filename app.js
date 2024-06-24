@@ -9,6 +9,7 @@ const scrapeIM3 = require('./scraping/scrapeIM3.js')
 const path = require('path')
 const ejsMate = require('ejs-mate');
 const loadEvents = require('./scraping/loadEvents')
+const loadAllIMEvents = require('./scraping/loadAllIMEvents')
 
 if (process.env.NODE_ENV == "production") {
     dbURL = process.env.dbURL;
@@ -25,6 +26,7 @@ if (process.env.NODE_ENV == "production") {
 console.log(axiosURL)
 
 runScraper = process.env.runScraper
+fullLoad = process.env.fullLoad
 console.log(runScraper)
 
 mongoose.connect(dbURL);
@@ -54,12 +56,16 @@ app.listen(3000, () => {
 
 
 
-loadEvents()
+//loadEvents()
 
 
 
 
-//scrapeIM();
+
+if (fullLoad == 'true') {
+
+    loadAllIMEvents();
+}
 if (runScraper == 'true') {
     console.log("Running Scraper")
     //scrapeIM2();

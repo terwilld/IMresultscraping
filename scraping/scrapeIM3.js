@@ -27,7 +27,9 @@ async function scrapeIM3() {
 async function scrapeAWholeIMRace(currentRace) {
 
     var headless = process.env.headless === 'true'
-    const browser = await puppeteer.launch({ headless, devtools: true });
+    var devtools = (!headless)
+    console.log(`headless: ${headless}, devtools: ${devtools}`)
+    const browser = await puppeteer.launch({ headless, devtools });
     var [page] = await browser.pages();
     await page.setViewport({ width: 1600, height: 700 });
     await page.goto(currentRace.url);                   //Go to the main url for this location.  Multiple years of results here
