@@ -1,7 +1,7 @@
 const puppeteer = require('puppeteer')
 const mongoose = require('mongoose');
 require('dotenv').config()
-const ImRace = require('../models/imrace.js')
+const ImRace = require('../models/imRace.js')
 const RaceEvent = require('../models/raceEvent.js')
 
 function sleep(ms) {
