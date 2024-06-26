@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const RaceEvent = require('../models/raceEvent.js')
+const logger = require('../logger.js')
 
 
 function sleep(ms) {
@@ -8,7 +9,6 @@ function sleep(ms) {
 
 
 async function loadEvents() {
-
 
     res = await RaceEvent.findOne({ name: "IMFL", year: 2023 })
     if (res == null) {
@@ -19,7 +19,8 @@ async function loadEvents() {
             url: "https://www.ironman.com/im-florida-results",
             finished: false,
             type: 'Triathlon',
-            completed: false
+            completed: false,
+            scrapeURL: 'https://labs.competitor.com/result/subevent/811402C9-91A1-4EBB-B102-E083A44876E7?filter=%7B%7D&order=ASC&page=1&perPage=200&sort=FinishRankOverall'
         })
         res = await newRace.save()
         //console.log(res)
@@ -35,7 +36,8 @@ async function loadEvents() {
             url: "https://www.ironman.com/im-florida-results",
             finished: false,
             type: 'Triathlon',
-            completed: false
+            completed: false,
+            scrapeURL: 'https://labs.competitor.com/result/subevent/F1D7FBF8-7BD7-44CF-BD37-9492D1EDDC1E?filter=%7B%7D&order=ASC&page=1&perPage=200&sort=FinishRankOverall'
         })
         res = await newRace.save()
 
@@ -50,7 +52,8 @@ async function loadEvents() {
             url: "https://www.ironman.com/im-florida-results",
             finished: false,
             type: 'Triathlon',
-            completed: false
+            completed: false,
+            scrapeURL: 'https://labs.competitor.com/result/subevent/D8DF0B33-0809-4507-BCBC-611067A517CA?filter=%7B%7D&order=ASC&page=1&perPage=200&sort=FinishRankOverall'
         })
         res = await newRace.save()
         //console.log(res)
@@ -66,7 +69,8 @@ async function loadEvents() {
             url: "https://www.ironman.com/im-florida-results",
             finished: false,
             type: 'Triathlon',
-            completed: false
+            completed: false,
+            scrapeURL: 'https://labs.competitor.com/result/subevent/4C54363C-C8FC-E911-A812-000D3A5A1477?filter=%7B%7D&order=ASC&page=1&perPage=200&sort=FinishRankOverall'
         })
         res = await newRace.save()
         //console.log(res)
@@ -80,6 +84,10 @@ async function loadEvents() {
 //     .populate('author')
 
 module.exports = loadEvents
+
+
+
+
 
 
 

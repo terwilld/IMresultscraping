@@ -1,0 +1,13 @@
+
+
+
+
+
+Biathlons will need to be handled differently.
+    if(year.includes("Bike-Run") || year.includes("Bike & Run"))
+    Inconsisent naming on their site
+
+clickYear is probably my most dangerous function at the moment
+
+
+

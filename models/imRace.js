@@ -11,6 +11,13 @@ const ImRaceSchema = new Schema({
         enum: ['140.6', '70.3', '5150', 'Unknown'],
         default: 'Unknown'
     },
+    city: String,
+    location: String,
+    dateString: String,
+    country: String,
+    lastRaceEventsPopulated: Date,
+    scrapeEventLinksSuccessful: Boolean
+
 })
 
 module.exports = mongoose.model('ImRace', ImRaceSchema)

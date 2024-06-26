@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-
+const ImRace = require('./imRace')
 const Schema = mongoose.Schema;
 const ImResult = require('./imresult')
 
@@ -10,7 +10,7 @@ const RaceEventSchema = new Schema({
     url: String,
     type: {
         type: String,
-        enum: ['Triathlon']
+        enum: ['Triathlon', 'Biathlon']
     },
     completed: {
         type: Boolean,
@@ -23,6 +23,10 @@ const RaceEventSchema = new Schema({
     scrapeURL: {
         type: String,
         default: null
+    },
+    parentRace: {
+        type: Schema.Types.ObjectId,
+        ref: "ImRace"
     }
 
 })

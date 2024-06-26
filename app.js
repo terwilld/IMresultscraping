@@ -10,6 +10,8 @@ const path = require('path')
 const ejsMate = require('ejs-mate');
 const loadEvents = require('./scraping/loadEvents')
 const loadAllIMEvents = require('./scraping/loadAllIMEvents')
+const morgan = require('morgan')
+const logger = require('./logger')
 
 if (process.env.NODE_ENV == "production") {
     dbURL = process.env.dbURL;
@@ -60,11 +62,12 @@ app.listen(3000, () => {
 
 
 
-
+logger.info('Hello, world!');
+logger.error('test')
 
 if (fullLoad == 'true') {
 
-    loadAllIMEvents();
+    //loadAllIMEvents();
 }
 if (runScraper == 'true') {
     console.log("Running Scraper")

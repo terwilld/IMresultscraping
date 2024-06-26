@@ -33,10 +33,12 @@ async function scrapeAWholeIMRace(currentRace) {
     var [page] = await browser.pages();
     await page.setViewport({ width: 1600, height: 700 });
     await page.goto(currentRace.url);                   //Go to the main url for this location.  Multiple years of results here
-    await page.waitForSelector('#onetrust-accept-btn-handler')
-    await page.click('#onetrust-accept-btn-handler')    //  Accept cookies
+    await page.waitForSelector('#onetrust-accept-btn-handler', { timeout: 0 })
+    await page.click('#onetrust-accept-btn-handler', { timeout: 0 })    //  Accept cookies
     // console.log("waiting done")
 
+    console.log("DO I get here")
+    await sleep(1000000)
     //  Find the tab within this page corresponding to the year we want.
     // console.log(currentRace.year)
     var iFrameLink = await clickYear(page, currentRace.year)
@@ -47,7 +49,6 @@ async function scrapeAWholeIMRace(currentRace) {
     //var iFrameLink = await extractIFrame(page)
     //console.log(iFrameLink)
     await sleep(500)
-
 
 
 
@@ -257,27 +258,7 @@ async function extractIFrame(page) {
 async function clickYear(page, year) {
 
     await page.setRequestInterception(true)
-    // result = []
-    // page.on('request', request => {
-    //     request_client({
-    //         uri: request.url(),
-    //         resolveWithFullResponse: true,
-    //     }).then(response => {
-    //         const request_url = request.url();
-    //         if (request_url.startsWith("https://labs.competitor.com/result/subevent/")) {
-    //             console.log("I have found one!")
-    //             console.log(request_url)
-    //             result.push({
-    //                 request_url
-    //             });
-    //         }
 
-    //         request.continue();
-    //     }).catch(error => {
-    //         console.error(error);
-    //         request.abort();
-    //     });
-    // });
     correct_url = null
     page.on('request', (request) => {
         // Your custom logic here

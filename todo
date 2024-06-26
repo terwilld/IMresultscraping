@@ -6,6 +6,23 @@ https://blog.appsignal.com/2023/02/08/puppeteer-in-nodejs-common-mistakes-to-avo
 DocumentNotFoundError: No document found for query
 fun error when clearing db and previous iteration is open
 
+1)  Type of event needs to be the type of race
+    Need new field Distance
+
+2023: Age Group" (type string) // What is this in year of race events
+
+Need to handle all non numbers in this somehow.
+Pro vs not pro.  AG vs pro.  Biathon.  Sprint
+
+
+
+3)  Need to handle event pages in scrape where results are not yet populated
+
+https://betterstack.com/community/guides/logging/how-to-install-setup-and-use-pino-to-log-node-js-applications/
+
+
+
+
 
 separate thread for scraping
 error handling on timeouts
@@ -48,6 +65,8 @@ resultscraping> db.imresults.aggregate([{$group:{_id:"$fullName",count:{$sum:1}}
 ]
 WHOA
 db.raceevents.updateMany({},{$set:{completed:true}})
+
+https://github.com/gajus/puppeteer-proxy/issues/22
 
 
 4 races.  Re-learn to deploy with pupeteer
