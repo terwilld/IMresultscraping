@@ -4,6 +4,7 @@ const RaceEvent = require('../models/raceEvent.js')
 const ImResult = require('../models/imresult.js')
 const request_client = require('request-promise-native');
 require('dotenv').config()
+const logger = require('../logger.js')
 
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
@@ -20,83 +21,131 @@ async function scrapeIM3() {
         currentRace = await RaceEvent.findOne({ _id: IMrace._id })
 
         console.log(currentRace)
-        await scrapeAWholeIMRace(currentRace)
+        //await scrapeAWholeIMRace(currentRace)
+        await scrapeAWholeIMRace2(currentRace)
     }
 }
 
-async function scrapeAWholeIMRace(currentRace) {
-
+async function scrapeAWholeIMRace2(currentRace) {
     var headless = process.env.headless === 'true'
     var devtools = (!headless)
     console.log(`headless: ${headless}, devtools: ${devtools}`)
     const browser = await puppeteer.launch({ headless, devtools });
     var [page] = await browser.pages();
     await page.setViewport({ width: 1600, height: 700 });
-    await page.goto(currentRace.url);                   //Go to the main url for this location.  Multiple years of results here
-    await page.waitForSelector('#onetrust-accept-btn-handler', { timeout: 0 })
-    await page.click('#onetrust-accept-btn-handler', { timeout: 0 })    //  Accept cookies
-    // console.log("waiting done")
+    try {
 
-    console.log("DO I get here")
-    await sleep(1000000)
-    //  Find the tab within this page corresponding to the year we want.
-    // console.log(currentRace.year)
-    var iFrameLink = await clickYear(page, currentRace.year)
-    console.log("New URL")
-    await sleep(500)
-    console.log('Post sleep for 20 seconds')
-    //Go find the link for the ajax
-    //var iFrameLink = await extractIFrame(page)
-    //console.log(iFrameLink)
-    await sleep(500)
+        var iFrameLink = currentRace.scrapeURL
+        partialIframeLink = iFrameLink
+        console.log(iFrameLink)
+        iFrameLink = iFrameLink + '?filter=%7B%7D&order=ASC&page=1&perPage=200&sort=FinishRankOverall'
+        console.log(iFrameLink)
+
+        await page.goto(iFrameLink, {
+            timeout: 0,
+            waitUntil: ["domcontentloaded", "networkidle2"],
+        });
+
+        const maxPage = await calculateMaxPage(page)
+        console.log(`Max page is: ${maxPage}`)
+        await sleep(100)
+
+        var currentPageResults = await getPageResults(page)
+        console.log("Trying to insert results")
+        // console.log(currentPageResults)
+        try {
+            insertUpdates(currentPageResults, currentRace)
+        } catch (e) {
+            console.log(e)
+        }
+        await scrapeRemainingPages(page, partialIframeLink, maxPage, currentRace)
 
 
-
-    partialIframeLink = iFrameLink
-    iFrameLink = iFrameLink + '?filter=%7B%7D&order=ASC&page=1&perPage=200&sort=FinishRankOverall'
-    console.log(currentRace)
-    console.log("This is my current race")
-    console.log(currentRace.scrapeURL)
-    if (!currentRace.scrapeURL) {
-        console.log("Add the scrape url")
-        currentRace.scrapeURL = iFrameLink
+        currentRace.completed = true
         await currentRace.save()
 
-    }
-    await page.goto(iFrameLink, {
-        timeout: 20 * 1000,
-        waitUntil: ["domcontentloaded", "networkidle2"],
-    });
-    const maxPage = await calculateMaxPage(page)
-    console.log(`Max page is: ${maxPage}`)
-    await sleep(100)
-    var currentPageResults = await getPageResults(page)
-    console.log("Trying to insert results")
-    // console.log(currentPageResults)
-    try {
-        insertUpdates(currentPageResults, currentRace)
+        console.log("Post update and save^^")
+        await browser.close()
+
+        await sleep(10)
     } catch (e) {
-        console.log(e)
+        currentRace.scrapeFailed = true
+        await currentRace.save()
+        await browser.close()
+
     }
-    await scrapeRemainingPages(page, partialIframeLink, maxPage, currentRace)
-    console.log("Done Race!")
-
-    currentRace.completed = true
-    await currentRace.save()
-
-    console.log("Post update and save^^")
-    await browser.close()
-    console.log("Browser is closed")
-
 
 }
+
+
+async function scrapeAWholeIMRace(currentRace) {
+    try {
+        var headless = process.env.headless === 'true'
+        var devtools = (!headless)
+        console.log(`headless: ${headless}, devtools: ${devtools}`)
+        const browser = await puppeteer.launch({ headless, devtools });
+        var [page] = await browser.pages();
+        await page.setViewport({ width: 1600, height: 700 });
+        await page.goto(currentRace.url);                   //Go to the main url for this location.  Multiple years of results here
+        await page.waitForSelector('#onetrust-accept-btn-handler', { timeout: 0 })
+        await page.click('#onetrust-accept-btn-handler', { timeout: 0 })    //  Accept cookies
+        // console.log("waiting done")
+
+
+        //  Find the tab within this page corresponding to the year we want.
+        // console.log(currentRace.year)
+
+        var iFrameLink = await clickYear(page, currentRace.year)
+        console.log("New URL")
+        await sleep(500)
+        console.log('Post sleep for 20 seconds')
+
+        await sleep(500)
+        partialIframeLink = iFrameLink
+        iFrameLink = iFrameLink + '?filter=%7B%7D&order=ASC&page=1&perPage=200&sort=FinishRankOverall'
+
+        if (!currentRace.scrapeURL) {
+            console.log("Add the scrape url")
+            currentRace.scrapeURL = iFrameLink
+            await currentRace.save()
+
+        }
+        await page.goto(iFrameLink, {
+            timeout: 20 * 1000,
+            waitUntil: ["domcontentloaded", "networkidle2"],
+        });
+        const maxPage = await calculateMaxPage(page)
+        console.log(`Max page is: ${maxPage}`)
+        await sleep(100)
+        var currentPageResults = await getPageResults(page)
+
+        insertUpdates(currentPageResults, currentRace)
+        await scrapeRemainingPages(page, partialIframeLink, maxPage, currentRace)
+        console.log("Done Race!")
+
+        currentRace.completed = true
+        await currentRace.save()
+
+        console.log("Post update and save^^")
+        await browser.close()
+        console.log("Browser is closed")
+    } catch (e) {
+        currentRace.scrapeFailed = true
+        await currentRace.save()
+        await browser.close()
+
+    }
+}
+
+
+
 async function scrapeRemainingPages(page, partialIframeLink, maxPage, currentRace) {
     for (let i = 2; i < maxPage + 1; i++) {
         console.log("This is my new page:")
         fullNewURL = partialIframeLink + '?filter=%7B%7D&order=ASC&page=' + i + '&perPage=200&sort=FinishRankOverall'
         console.log(fullNewURL)
         await page.goto(fullNewURL, {
-            timeout: 20 * 10000,
+            timeout: 0,
             waitUntil: ["domcontentloaded", "networkidle2"],
         });
         console.log(`network idle on page: ${fullNewURL}`)
@@ -115,8 +164,46 @@ async function insertUpdates(results, currentRace) {
     // console.log("These are my results")
     // console.log(currentRace)
     // console.log("^^This is my current race")
+    logger.info("About to insert results")
+
     try {
-        results.forEach(async (result) => {
+        var inserts = 0
+        var notInserted = 0
+        console.log("About to do the inserts")
+        // const insertsTotal = results.reduce(async (resObject, result) => {
+        //     doc = await ImResult.findOne({ fullName: result.fullName, event: currentRace.id, totalTime: result.totalTime })
+        //     if (!doc) {
+        //         //console.log("Need to write this document")
+        //         result.overallRank = result.overallRank.replace(",", "")  // remove comma from number
+        //         result.genderRank = result.genderRank.replace(",", "")
+        //         result.divRank = result.divRank.replace(",", "")
+        //         result.bib = parseInt(result.bib)
+        //         var newImResult = new ImResult(result)
+        //         newImResult.event = currentRace
+        //         //console.log(newImResult)
+        //         await newImResult.save()
+        //         // console.log(currentRace)
+        //         // console.log('^^ current race')
+        //         resObject.inserts += 1
+
+        //     } else {
+        //         //console.log("Document Already Exists matching event, name and time")
+        //         resObject.notInserted += 1
+        //         notInserted = notInserted + 1
+        //     }
+        //     console.log(resObject)
+        //     // resObject.inserts += 1
+        //     // resObject.notInserted += 2
+        //     return resObject
+        // }, { inserts: 0, notInserted: 0 })
+        // console.log(" inerst total")
+        // console.log(insertsTotal)
+        // console.log("  ^   insert total")
+        var preCount = await ImResult.countDocuments({})
+        // console.log(preCount)
+        // console.log("this is my pre-count")
+        for (let step = 0; step < results.length; step++) {
+            result = results[step]
             //console.log(result)
             doc = await ImResult.findOne({ fullName: result.fullName, event: currentRace.id, totalTime: result.totalTime })
             if (!doc) {
@@ -127,24 +214,67 @@ async function insertUpdates(results, currentRace) {
                 result.bib = parseInt(result.bib)
                 var newImResult = new ImResult(result)
                 newImResult.event = currentRace
+                //console.log(newImResult)
                 await newImResult.save()
                 // console.log(currentRace)
                 // console.log('^^ current race')
+                inserts = inserts + 1
+                //console.log(`Inserted: ${inserts}`)
             } else {
                 //console.log("Document Already Exists matching event, name and time")
+                notInserted = notInserted + 1
+                //console.log(`Not inserted: ${notInserted}`)
             }
-        })
+            //console.log(`step: ${step} of total: ${results.length}`)
+        }
+        var postCount = await ImResult.countDocuments({})
+        logger.info(`Partially processed: ${currentRace.url}. Scrape URL: ${currentRace.scrapeURL}.  ${inserts} documents inserted.  ${notInserted} documents not inserted
+        Precount is: ${preCount} Post count is: ${postCount}`)
+
+
+        // results.forEach(async (result) => {
+        //     console.log(result)
+        //     doc = await ImResult.findOne({ fullName: result.fullName, event: currentRace.id, totalTime: result.totalTime })
+        //     if (!doc) {
+        //         //console.log("Need to write this document")
+        //         result.overallRank = result.overallRank.replace(",", "")  // remove comma from number
+        //         result.genderRank = result.genderRank.replace(",", "")
+        //         result.divRank = result.divRank.replace(",", "")
+        //         result.bib = parseInt(result.bib)
+        //         var newImResult = new ImResult(result)
+        //         newImResult.event = currentRace
+        //         //console.log(newImResult)
+        //         await newImResult.save()
+        //         // console.log(currentRace)
+        //         // console.log('^^ current race')
+        //         inserts = inserts + 1
+        //         console.log(`Inserted: ${inserts}`)
+        //     } else {
+        //         //console.log("Document Already Exists matching event, name and time")
+        //         notInserted = notInserted + 1
+        //         console.log(`Not inserted: ${notinserted}`)
+        //     }
+        // })
+        // logger.info(`Partially processed: ${currentRace.url}. Scrape URL: ${currentRace.scrapeURL}.  ${inserts} documents inserted.  ${notInserted} documents not inserted`)
 
     } catch (e) {
         console.log(e)
     }
+
 }
 
 
 async function getPageResults(page) {
+    await sleep(1000)
     await page.waitForSelector('tbody > tr')
+    await sleep(10)
+    await page.waitForSelector('td >span')
     const expandableButtons = await page.evaluate(async () => {
         // Each row is one result.  Each needs to be expanded.
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+        await sleep(50)
         results = []
         currentRows = document.querySelectorAll('tbody > tr')
         for (i = 0; i < currentRows.length; i++) {
@@ -164,7 +294,7 @@ async function getPageResults(page) {
                 'points': currentData[9],
                 'designation': null
             }
-            console.log(`currently getting result #${newResultObject.overallRank}`)
+
 
             expandButton = currentRows[i].cells[0]
             await expandButton.click();
@@ -199,7 +329,7 @@ async function getPageResults(page) {
 
 
             await new Promise(function (resolve) {
-                setTimeout(resolve, 10)
+                setTimeout(resolve, 50)
             });
             //console.log(resultContainer)
             genInfo = resultContainer.querySelectorAll('.genInfo > .table > .tableFooter >.wrapper >.text')

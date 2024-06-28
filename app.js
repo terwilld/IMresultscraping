@@ -57,20 +57,16 @@ app.listen(3000, () => {
 
 
 
+async function loader() {
 
-//loadEvents()
+    if (fullLoad == 'true') {
 
-
-
-logger.info('Hello, world!');
-logger.error('test')
-
-if (fullLoad == 'true') {
-
-    //loadAllIMEvents();
+        await loadAllIMEvents();
+    }
+    if (runScraper == 'true') {
+        console.log("Running Scraper")
+        await scrapeIM3();
+    }
 }
-if (runScraper == 'true') {
-    console.log("Running Scraper")
-    //scrapeIM2();
-    scrapeIM3();
-}
+
+loader();

@@ -10,11 +10,8 @@ function sleep(ms) {
 }
 
 async function loadAllIMEvents() {
-    //console.log("Inside loading all events")
-
-
-    console.log("Running get All Events")
-    logger.info("Running Get all Events")
+    console.log("Running get All Events.  Top level races will be inserted")
+    logger.info("Running Get all Events.  Top Level races will be inserted")
     const raceLinks = await getAllEvents()
     //  Gathers an array of all urls for all races
     //  Each of these races has lots of years / events ; arr => eg.
@@ -22,18 +19,13 @@ async function loadAllIMEvents() {
     //     'https://www.ironman.com/im703-finland',
     // 'https://www.ironman.com/im703-les-sables-dolonne',
     //     ...
-    // ]
-
-
-
-
+    // 
     await updateRaces(raceLinks)
     // Convert the above structure to insert entries for races
     // { url: 'https://www.ironman.com/im703-gdynia',
     //             distance: '70.3', }
     //  The distances will be a guess, each of the events is actually open to change.
     //   Race events will default to their parent value, but it cna be changed
-
     console.log("Post race updates")
     logger.info("The races have been inserted")
 
@@ -56,9 +48,9 @@ async function setRaceEvents() {
         const browser = await puppeteer.launch({ headless, devtools });
         var [page] = await browser.pages();
         await page.setViewport({ width: 1600, height: 700 });
-        await page.goto("https://www.ironman.com/races", { timeout: 0 })
-        await page.waitForSelector('#onetrust-accept-btn-handler')
-        await page.click('#onetrust-accept-btn-handler')    //  Accept cookies
+        // await page.goto("https://www.ironman.com/races", { timeout: 0 })
+        // await page.waitForSelector('#onetrust-accept-btn-handler')
+        // await page.click('#onetrust-accept-btn-handler')    //  Accept cookies
         console.log(`Starting to populate races for : ${race.url}`)
         logger.info(`Starting to populate races for : ${race.url}`)
         try {
@@ -68,14 +60,16 @@ async function setRaceEvents() {
             var insertedDocuments = await createRaceEvents(race, resObject)
             race.lastRaceEventsPopulated = Date.now()
             race.scrapeEventLinksSuccessful = true
+            var delta = (Date.now() - start) / 1000
+            race.secondsToCreateRaceEvents = delta
             await race.save()
             await browser.close()
-            var delta = (Date.now() - start) / 1000
             //console.log(`This race is completed and took ${delta} seconds`)
             logger.info(`This race ${race.url}is completed and took ${delta} seconds.  ${insertedDocuments} documents were inserted into raceevents`)
         } catch (e) {
             console.log("This race is failed")
             logger.error("This race is failed")
+            logger.error(race)
             logger.error(e)
             race.scrapeEventLinksSuccessful = false
             race.lastRaceEventsPopulated = Date.now()
@@ -111,30 +105,33 @@ async function createRaceEvents(race, responseObject) {
                 year = years[i]
                 type = 'Triathlon'
                 // if (year.includes("Bike-Run") || year.includes("Bike & Run") || year.includes("Bike&Run")) {
+                distance = race.distance
                 if (year.includes("Bike") & year.includes("Run")) {
                     console.log("This contains Bike run")
                     type = 'Biathlon'
-                    year = year.split(" ")[0]
+                    //year = year.split(" ")[0]
                 }
                 if (year.includes("Sprint")) {
-                    type = 'Sprint'
-                    year = year.split(" ")[0]
-
+                    type = 'Triathlon'
+                    //year = year.split(" ")[0]
+                    distance = 'Sprint'
                 }
 
                 if (year.includes("Age Group")) {
-                    year = year.split(" ")[0]
+                    //year = year.split(" ")[0]
                 }
                 if (year.includes("Pro")) {
-                    year = year.split(" ")[0]
+                    //year = year.split(" ")[0]
                 }
 
-                year = year.replace(":", "")
+                //year = year.replace(":", "")
 
                 doc = await RaceEvent.findOne({ scrapeURL: url })
                 if (!doc) {
-                    console.log("No document!")
-                    newRaceEvent = new RaceEvent({ scrapeURL: url, url: race.url, year, type, completed: false, name: race.location, parentRace: race })
+                    newRaceEvent = new RaceEvent({
+                        scrapeURL: url, url: race.url, year,
+                        type, completed: false, name: race.location, parentRace: race, distance: distance
+                    })
                     await newRaceEvent.save()
                     countOfDocs += 1
                 }
@@ -142,7 +139,7 @@ async function createRaceEvents(race, responseObject) {
 
         }
     }
-    console.log("End of race events")
+
     return countOfDocs
     await sleep(100)
 }
@@ -151,6 +148,9 @@ async function extractRacePageURLs(race, page) {
     //console.log(race)
     //console.log(page)
     await page.goto(race.url, { timeout: 0 })
+    await page.waitForSelector('#onetrust-accept-btn-handler')
+    await page.click('#onetrust-accept-btn-handler')
+
 
     await updateRaceInfo(page, race)
 

@@ -5,7 +5,8 @@ const ImResult = require('./imresult')
 
 const RaceEventSchema = new Schema({
     name: String,
-    year: Number,
+    // year: Number,
+    year: String,
     date: Date,
     url: String,
     type: {
@@ -27,6 +28,13 @@ const RaceEventSchema = new Schema({
     parentRace: {
         type: Schema.Types.ObjectId,
         ref: "ImRace"
+    },
+    scrapeFailed: {
+        type: Boolean
+    },
+    distance: {
+        type: String,
+        enum: ['140.6', '70.3', '5150', 'Sprint']
     }
 
 })

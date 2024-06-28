@@ -16,7 +16,8 @@ const ImRaceSchema = new Schema({
     dateString: String,
     country: String,
     lastRaceEventsPopulated: Date,
-    scrapeEventLinksSuccessful: Boolean
+    scrapeEventLinksSuccessful: Boolean,
+    secondsToCreateRaceEvents: Number
 
 })
 
