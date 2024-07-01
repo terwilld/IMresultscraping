@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const ImRace = require('./imRace')
 const Schema = mongoose.Schema;
 const ImResult = require('./imresult')
+const geoData = require('./geodata.js')
 
 const RaceEventSchema = new Schema({
     name: String,
@@ -35,8 +36,11 @@ const RaceEventSchema = new Schema({
     distance: {
         type: String,
         enum: ['140.6', '70.3', '5150', 'Sprint']
+    },
+    location: {
+        type: Schema.Types.ObjectId,
+        ref: "geoData"
     }
-
 })
 
 module.exports = mongoose.model('RaceEvent', RaceEventSchema)

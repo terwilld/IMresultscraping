@@ -12,7 +12,10 @@ function sleep(ms) {
 
 async function scrapeIM3() {
     console.log("I'm in im scrape 3")
+    // https://www.ironman.com/im703-western-massachusetts
     IMraces = await RaceEvent.find({ completed: false })
+    // url: 'https://www.ironman.com/im703-western-massachusetts'
+    //IMraces = await RaceEvent.find({ completed: false, url: 'https://www.ironman.com/im703-western-massachusetts' })
     // IMraces = await RaceEvent.find({})
     //console.log(IMraces)
     for (const IMrace of IMraces) {

@@ -17,8 +17,11 @@ const ImRaceSchema = new Schema({
     country: String,
     lastRaceEventsPopulated: Date,
     scrapeEventLinksSuccessful: Boolean,
-    secondsToCreateRaceEvents: Number
-
+    secondsToCreateRaceEvents: Number,
+    locationCoords: {
+        type: Schema.Types.ObjectId,
+        ref: "geoData"
+    }
 })
 
 module.exports = mongoose.model('ImRace', ImRaceSchema)
