@@ -3,26 +3,26 @@ const axios = require('axios');
 const mongoose = require('mongoose');
 const geoData = require('../models/geodata.js')
 const IMRace = require('../models/imRace.js')
-require('dotenv').config()
+//require('dotenv').config()
 
 geoAPI = process.env.googleGeoAPI;
 
-console.log(geoAPI)
+// console.log(geoAPI)
 
 //currentRace = await RaceEvent.findOne({ _id: IMrace._id })
 
 
-dbURL = 'mongodb://127.0.0.1:27017/resultscraping';
-secret = 'secret';
-axiosURL = 'http://localhost:3000'
+// dbURL = 'mongodb://127.0.0.1:27017/resultscraping';
+// secret = 'secret';
+// axiosURL = 'http://localhost:3000'
 
-mongoose.connect(dbURL);
-const db = mongoose.connection;
-db.on("error", console.error.bind(console, "connection error:"));
-db.once("open", () => {
-    console.log("Database connected by mongoose")
-    console.log(dbURL)
-})
+// mongoose.connect(dbURL);
+// const db = mongoose.connection;
+// db.on("error", console.error.bind(console, "connection error:"));
+// db.once("open", () => {
+//     console.log("Database connected by mongoose")
+//     console.log(dbURL)
+// })
 
 
 async function populateAllRaces() {
@@ -73,10 +73,14 @@ async function getGeoData(location) {
     }
 }
 
+
+module.exports = getGeoData
+
+
 // Gdynia, Poland
 //getGeoData('Gdynia, Poland')
 
-populateAllRaces()
+//populateAllRaces()
 // geometry: {
 //     type: {
 //         type: String, // Don't do `{ location: { type: String } }`

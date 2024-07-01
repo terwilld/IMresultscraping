@@ -1271,3 +1271,38 @@
 {"level":30,"time":"2024-07-01T17:30:47.101Z","pid":27378,"hostname":"Davids-MacBook-Air.local","msg":"Starting to populate races for : https://ironman.com/im-new-zealand"}
 {"level":30,"time":"2024-07-01T17:33:06.380Z","pid":27378,"hostname":"Davids-MacBook-Air.local","msg":"This race https://ironman.com/im-new-zealandis completed and took 139.677 seconds.  12 documents were inserted into raceevents"}
 {"level":30,"time":"2024-07-01T17:33:08.865Z","pid":27378,"hostname":"Davids-MacBook-Air.local","msg":"Starting to populate races for : https://ironman.com/im703-punta-del-este"}
+{"level":30,"time":"2024-07-01T17:38:48.504Z","pid":28244,"hostname":"Davids-MacBook-Air.local","msg":"Running Get all Events.  Top Level races will be inserted"}
+{"level":30,"time":"2024-07-01T17:39:10.993Z","pid":28307,"hostname":"Davids-MacBook-Air.local","msg":"Running Get all Events.  Top Level races will be inserted"}
+{"level":30,"time":"2024-07-01T17:39:55.086Z","pid":28307,"hostname":"Davids-MacBook-Air.local","msg":"The races have been inserted"}
+{"level":30,"time":"2024-07-01T17:39:57.133Z","pid":28307,"hostname":"Davids-MacBook-Air.local","msg":"Starting to populate races for : https://ironman.com/im703-punta-del-este"}
+{"level":30,"time":"2024-07-01T17:40:34.248Z","pid":28423,"hostname":"Davids-MacBook-Air.local","msg":"Running Get all Events.  Top Level races will be inserted"}
+{"level":30,"time":"2024-07-01T17:41:09.884Z","pid":28423,"hostname":"Davids-MacBook-Air.local","msg":"The races have been inserted"}
+{"level":30,"time":"2024-07-01T17:41:11.854Z","pid":28423,"hostname":"Davids-MacBook-Air.local","msg":"Starting to populate races for : https://ironman.com/im703-punta-del-este"}
+{"level":30,"time":"2024-07-01T17:41:48.306Z","pid":28545,"hostname":"Davids-MacBook-Air.local","msg":"Running Get all Events.  Top Level races will be inserted"}
+{"level":30,"time":"2024-07-01T17:42:22.867Z","pid":28545,"hostname":"Davids-MacBook-Air.local","msg":"The races have been inserted"}
+{"level":30,"time":"2024-07-01T17:42:24.848Z","pid":28545,"hostname":"Davids-MacBook-Air.local","msg":"Starting to populate races for : https://ironman.com/im703-punta-del-este"}
+{"level":30,"time":"2024-07-01T17:43:36.027Z","pid":28695,"hostname":"Davids-MacBook-Air.local","msg":"Running Get all Events.  Top Level races will be inserted"}
+{"level":30,"time":"2024-07-01T17:44:06.415Z","pid":28695,"hostname":"Davids-MacBook-Air.local","msg":"The races have been inserted"}
+{"level":30,"time":"2024-07-01T17:44:07.880Z","pid":28695,"hostname":"Davids-MacBook-Air.local","msg":"Starting to populate races for : https://ironman.com/im703-punta-del-este"}
+{"level":30,"time":"2024-07-01T17:47:47.076Z","pid":28695,"hostname":"Davids-MacBook-Air.local","msg":"This race https://ironman.com/im703-punta-del-esteis completed and took 219.88 seconds.  5 documents were inserted into raceevents"}
+{"level":30,"time":"2024-07-01T17:47:49.216Z","pid":28695,"hostname":"Davids-MacBook-Air.local","msg":"Starting to populate races for : https://ironman.com/im703-puerto-rico"}
+{"level":30,"time":"2024-07-01T17:51:36.577Z","pid":28695,"hostname":"Davids-MacBook-Air.local","msg":"This race https://ironman.com/im703-puerto-ricois completed and took 228.597 seconds.  11 documents were inserted into raceevents"}
+{"level":30,"time":"2024-07-01T17:51:38.180Z","pid":28695,"hostname":"Davids-MacBook-Air.local","msg":"Starting to populate races for : https://www.ironman.com/im703-campeche"}
+{"level":30,"time":"2024-07-01T17:54:57.320Z","pid":28695,"hostname":"Davids-MacBook-Air.local","msg":"This race https://www.ironman.com/im703-campecheis completed and took 199.656 seconds.  5 documents were inserted into raceevents"}
+{"level":30,"time":"2024-07-01T17:54:59.373Z","pid":28695,"hostname":"Davids-MacBook-Air.local","msg":"Starting to populate races for : https://ironman.com/im703-geelong"}
+{"level":30,"time":"2024-07-01T17:57:41.332Z","pid":28695,"hostname":"Davids-MacBook-Air.local","msg":"This race https://ironman.com/im703-geelongis completed and took 163.342 seconds.  0 documents were inserted into raceevents"}
+{"level":30,"time":"2024-07-01T17:57:42.951Z","pid":28695,"hostname":"Davids-MacBook-Air.local","msg":"Starting to populate races for : https://ironman.com/im703-panama"}
+{"level":30,"time":"2024-07-01T18:00:48.134Z","pid":29442,"hostname":"Davids-MacBook-Air.local","msg":"Running Get all Events.  Top Level races will be inserted"}
+{"level":30,"time":"2024-07-01T18:01:23.650Z","pid":29442,"hostname":"Davids-MacBook-Air.local","msg":"The races have been inserted"}
+{"level":30,"time":"2024-07-01T18:01:26.020Z","pid":29442,"hostname":"Davids-MacBook-Air.local","msg":"Starting to populate races for : https://ironman.com/im703-panama"}
+{"level":30,"time":"2024-07-01T18:07:13.544Z","pid":29746,"hostname":"Davids-MacBook-Air.local","msg":"Running Get all Events.  Top Level races will be inserted"}
+{"level":30,"time":"2024-07-01T18:07:53.578Z","pid":29746,"hostname":"Davids-MacBook-Air.local","msg":"The races have been inserted"}
+{"level":30,"time":"2024-07-01T18:07:55.179Z","pid":29746,"hostname":"Davids-MacBook-Air.local","msg":"Starting to populate races for : https://www.ironman.com/im703-jonkoping"}
+{"level":30,"time":"2024-07-01T18:09:34.343Z","pid":29746,"hostname":"Davids-MacBook-Air.local","msg":"This race https://www.ironman.com/im703-jonkopingis completed and took 100.06 seconds.  7 documents were inserted into raceevents"}
+{"level":30,"time":"2024-07-01T18:09:35.875Z","pid":29746,"hostname":"Davids-MacBook-Air.local","msg":"Starting to populate races for : https://ironman.com/im703-muskoka"}
+{"level":30,"time":"2024-07-01T18:11:48.646Z","pid":29746,"hostname":"Davids-MacBook-Air.local","msg":"This race https://ironman.com/im703-muskokais completed and took 132.253 seconds.  9 documents were inserted into raceevents"}
+{"level":30,"time":"2024-07-01T18:11:50.514Z","pid":29746,"hostname":"Davids-MacBook-Air.local","msg":"Starting to populate races for : https://ironman.com/im703-ecuador"}
+{"level":30,"time":"2024-07-01T18:13:19.975Z","pid":29746,"hostname":"Davids-MacBook-Air.local","msg":"This race https://ironman.com/im703-ecuadoris completed and took 90.814 seconds.  7 documents were inserted into raceevents"}
+{"level":30,"time":"2024-07-01T18:13:21.457Z","pid":29746,"hostname":"Davids-MacBook-Air.local","msg":"Starting to populate races for : https://www.ironman.com/im-switzerland"}
+{"level":30,"time":"2024-07-01T18:14:48.950Z","pid":29746,"hostname":"Davids-MacBook-Air.local","msg":"This race https://www.ironman.com/im-switzerlandis completed and took 88.163 seconds.  6 documents were inserted into raceevents"}
+{"level":30,"time":"2024-07-01T18:14:51.336Z","pid":29746,"hostname":"Davids-MacBook-Air.local","msg":"Starting to populate races for : https://ironman.com/im703-muncie"}

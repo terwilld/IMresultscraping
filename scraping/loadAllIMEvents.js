@@ -5,6 +5,7 @@ const ImRace = require('../models/imRace.js')
 const RaceEvent = require('../models/raceEvent.js')
 const morgan = require('morgan')
 const logger = require('../logger.js')
+const getGeoData = require('../controllers/geocoding.js')
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
@@ -181,7 +182,7 @@ async function extractRacePageURLs(race, page) {
 
 async function updateRaceInfo(page, race) {
     //console.log("Inside update race event function")
-    await race.save()
+    // race.save()
     //console.log(page)
     //console.log(race)
     try {
@@ -221,8 +222,26 @@ async function updateRaceInfo(page, race) {
         race.country = splitLocation[2].trim()
         race.city = splitLocation[0].conct(splitLocation[1])
     }
+
+
+
+    if (race.location) {
+        try {
+            res = await getGeoData(race.location)
+            race.locationCoords = res
+
+        } catch (e) {
+
+            logger.error("There is dirty location data")
+            logger.error(race)
+            logger.error(e)
+
+        }
+    }
+
     await race.save()
-    await sleep(10)
+
+    await sleep(20)
 }
 async function getListOfYears(page) {
     //console.log("Inside get list of years")

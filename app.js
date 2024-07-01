@@ -65,7 +65,7 @@ async function loader() {
     }
     if (runScraper == 'true') {
         console.log("Running Scraper")
-        //await scrapeIM3();
+        await scrapeIM3();
     }
 }
 
