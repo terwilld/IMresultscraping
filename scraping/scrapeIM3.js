@@ -10,6 +10,8 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+//db.raceevents.find({ url: /Wester/i })
+
 async function scrapeIM3() {
     console.log("I'm in im scrape 3")
     // https://www.ironman.com/im703-western-massachusetts

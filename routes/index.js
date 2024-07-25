@@ -4,7 +4,7 @@ const index = require('../controllers/index.js')
 
 router.get('/', index.index)
 
-router.get('/results', index.results)
+//router.get('/results', index.results)
 
 router.get('/bikevsrun', index.bikevsrun)
 
